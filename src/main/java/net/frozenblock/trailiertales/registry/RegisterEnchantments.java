@@ -26,16 +26,16 @@ public class RegisterEnchantments {
 			context,
 			REBRUSH,
 			Enchantment.enchantment(
-					Enchantment.definition(
-						itemHolder.getOrThrow(TrailierItemTags.BRUSHES),
-						2,
-						3,
-						Enchantment.dynamicCost(25, 25),
-						Enchantment.dynamicCost(75, 25),
-						4,
-						EquipmentSlotGroup.HAND
-					)
+				Enchantment.definition(
+					itemHolder.getOrThrow(TrailierItemTags.BRUSH_ENCHANTABLE),
+					2,
+					3,
+					Enchantment.dynamicCost(25, 25),
+					Enchantment.dynamicCost(75, 25),
+					4,
+					EquipmentSlotGroup.HAND
 				)
+			)
 		);
 	}
 
