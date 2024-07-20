@@ -1,6 +1,7 @@
 package net.frozenblock.trailiertales.registry;
 
 import net.frozenblock.trailiertales.TrailierConstants;
+import net.frozenblock.trailiertales.block.entity.ClayDecoratedPotBlockEntity;
 import net.frozenblock.trailiertales.block.entity.SurveyorBlockEntity;
 import net.frozenblock.trailiertales.block.entity.coffin.CoffinBlockEntity;
 import net.minecraft.core.Registry;
@@ -14,6 +15,7 @@ public class RegisterBlockEntities {
 
 	public static final BlockEntityType<CoffinBlockEntity> COFFIN = register("coffin", CoffinBlockEntity::new, RegisterBlocks.COFFIN);
 	public static final BlockEntityType<SurveyorBlockEntity> SURVEYOR = register("surveyor", SurveyorBlockEntity::new, RegisterBlocks.SURVEYOR);
+	public static final BlockEntityType<ClayDecoratedPotBlockEntity> CLAY_DECORATED_POT = register("clay_decorated_pot", ClayDecoratedPotBlockEntity::new, RegisterBlocks.CLAY_DECORATED_POT);
 
 	public static void register() {
 		TrailierConstants.log("Registering BlockEntities for Trailier Tales.", TrailierConstants.UNSTABLE_LOGGING);

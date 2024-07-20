@@ -2,6 +2,7 @@ package net.frozenblock.trailiertales.registry;
 
 import net.frozenblock.lib.item.api.FrozenCreativeTabs;
 import net.frozenblock.trailiertales.TrailierConstants;
+import net.frozenblock.trailiertales.block.ClayDecoratedPotBlock;
 import net.frozenblock.trailiertales.block.CoffinBlock;
 import net.frozenblock.trailiertales.block.CyanRoseCropBlock;
 import net.frozenblock.trailiertales.block.NonFallingBrushableBlock;
@@ -252,9 +253,13 @@ public class RegisterBlocks {
 			.isRedstoneConductor(Blocks::never)
 	);
 
+	public static final ClayDecoratedPotBlock CLAY_DECORATED_POT = new ClayDecoratedPotBlock(
+		BlockBehaviour.Properties.ofFullCopy(Blocks.DECORATED_POT)
+	);
+
 	public static void init() {
 		registerBlockAfter(Blocks.SUSPICIOUS_SAND, "suspicious_red_sand", SUSPICIOUS_RED_SAND, CreativeModeTabs.FUNCTIONAL_BLOCKS);
-		registerBlockAfter(SUSPICIOUS_RED_SAND, "suspicious_dirt",SUSPICIOUS_DIRT, CreativeModeTabs.FUNCTIONAL_BLOCKS);
+		registerBlockAfter(SUSPICIOUS_RED_SAND, "suspicious_dirt", SUSPICIOUS_DIRT, CreativeModeTabs.FUNCTIONAL_BLOCKS);
 		registerBlockAfter(SUSPICIOUS_DIRT, "suspicious_clay", SUSPICIOUS_CLAY, CreativeModeTabs.FUNCTIONAL_BLOCKS);
 		registerBlockAfter(Blocks.SUSPICIOUS_GRAVEL, "suspicious_soul_soil", SUSPICIOUS_SOUL_SOIL, CreativeModeTabs.FUNCTIONAL_BLOCKS);
 
@@ -312,6 +317,7 @@ public class RegisterBlocks {
 
 		registerBlockAfter(Blocks.VAULT, "coffin", COFFIN, CreativeModeTabs.FUNCTIONAL_BLOCKS);
 		registerBlockAfter(Blocks.OBSERVER, "surveyor", SURVEYOR, CreativeModeTabs.REDSTONE_BLOCKS);
+		registerBlockAfter(Blocks.DECORATED_POT, "clay_decorated_pot", CLAY_DECORATED_POT, CreativeModeTabs.FUNCTIONAL_BLOCKS);
 	}
 
 	private static void registerBlock(String path, Block block) {
