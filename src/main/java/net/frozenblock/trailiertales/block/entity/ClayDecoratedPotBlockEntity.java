@@ -53,11 +53,17 @@ public class ClayDecoratedPotBlockEntity extends BlockEntity {
 		return this.decorations;
 	}
 
-	public boolean addDecoration(Item newSherd, int index) {
+	public void addDecoration(Item newSherd, Direction direction) {
 		List<Item> sherds = getDecorations().ordered();
-		if (index >= 4) return false;
-//		Optional<Item> back, left, right, front;
 		Optional<Item>[] items = new Optional[4];
+		int index = switch (direction) {
+			case NORTH -> 0;
+			case SOUTH -> 3;
+			case WEST -> 1;
+			case EAST -> 2;
+			default -> -1;
+		};
+
 		for (int i = 0; i < sherds.size(); i++) {
 			if (i == index) {
 				items[i] = Optional.ofNullable(newSherd);
@@ -70,7 +76,6 @@ public class ClayDecoratedPotBlockEntity extends BlockEntity {
 			items[i] = Optional.ofNullable(sherds.get(i));
 		}
 		decorations = new PotDecorations(items[0], items[1], items[2], items[3]);
-		return true;
 	}
 
 	public ItemStack getBakedPotItem() {
@@ -84,9 +89,9 @@ public class ClayDecoratedPotBlockEntity extends BlockEntity {
 		builder.set(DataComponents.POT_DECORATIONS, this.decorations);
 	}
 
-	protected void applyImplicitComponents(BlockEntity.DataComponentInput dataComponentInput) {
+	protected void applyImplicitComponents(DataComponentInput dataComponentInput) {
 		super.applyImplicitComponents(dataComponentInput);
-		this.decorations = (PotDecorations)dataComponentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
+		this.decorations = (PotDecorations) dataComponentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
 	}
 
 	public void removeComponentsFromTag(CompoundTag nbt) {
