@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -15,8 +16,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import static net.minecraft.world.level.block.CampfireBlock.LIT;
 import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -41,8 +44,27 @@ public class ClayDecoratedPotBlock extends DecoratedPotBlock {
 	}
 
 	@Override
+	protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+		if (direction == Direction.DOWN) {
+			state = state.setValue(BAKING, isActiveFire(neighborState));
+		}
+		return super.updateShape(state, direction, neighborState, world, pos, neighborPos);
+	}
+
+	private boolean isActiveFire(BlockState state) {
+		if (state.is(BlockTags.FIRE)) return true;
+		if (state.is(BlockTags.CAMPFIRES) && state.hasProperty(LIT)) {
+			return state.getValue(LIT);
+		}
+		if (state.is(Blocks.LAVA)) return true;
+		return false;
+	}
+
+	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-		return super.getStateForPlacement(ctx).setValue(BAKING, false);
+		LevelAccessor levelAccessor = ctx.getLevel();
+		BlockPos blockPos = ctx.getClickedPos();
+		return super.getStateForPlacement(ctx).setValue(BAKING, isActiveFire(levelAccessor.getBlockState(blockPos.below())));
 	}
 
 	@Override
@@ -50,10 +72,9 @@ public class ClayDecoratedPotBlock extends DecoratedPotBlock {
 		if (world.getBlockEntity(pos) instanceof ClayDecoratedPotBlockEntity clayPotBlockEntity) {
 			if (stack.is(ItemTags.DECORATED_POT_SHERDS)) {
 				entity.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-				ItemStack itemStack2 = stack.consumeAndReturn(1, entity);
 				Direction direction = hitResult.getDirection();
 				if (direction.get2DDataValue() != -1) {
-					clayPotBlockEntity.addDecoration(itemStack2.getItem(), direction);
+					clayPotBlockEntity.addDecoration(stack.getItem(), direction);
 					clayPotBlockEntity.setChanged();
 					return ItemInteractionResult.SUCCESS;
 				}
