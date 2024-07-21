@@ -6,9 +6,12 @@ import net.frozenblock.trailiertales.registry.RegisterBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.PotDecorations;
@@ -70,15 +73,24 @@ public class ClayDecoratedPotBlockEntity extends BlockEntity {
 		return true;
 	}
 
-//	public ItemStack getPotAsItem() {
-//		ItemStack itemStack = Items.DECORATED_POT.getDefaultInstance();
-//		itemStack.applyComponents(this.collectComponents());
-//		return itemStack;
-//	}
+	public ItemStack getBakedPotItem() {
+		ItemStack itemStack = Items.DECORATED_POT.getDefaultInstance();
+		itemStack.applyComponents(this.collectComponents());
+		return itemStack;
+	}
 
-//	public static ItemStack createDecoratedPotItem(PotDecorations value) {
-//		ItemStack itemStack = Items.DECORATED_POT.getDefaultInstance();
-//		itemStack.set(DataComponents.POT_DECORATIONS, value);
-//		return itemStack;
-//	}
+	protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+		super.collectImplicitComponents(builder);
+		builder.set(DataComponents.POT_DECORATIONS, this.decorations);
+	}
+
+	protected void applyImplicitComponents(BlockEntity.DataComponentInput dataComponentInput) {
+		super.applyImplicitComponents(dataComponentInput);
+		this.decorations = (PotDecorations)dataComponentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
+	}
+
+	public void removeComponentsFromTag(CompoundTag nbt) {
+		super.removeComponentsFromTag(nbt);
+		nbt.remove("sherds");
+	}
 }
