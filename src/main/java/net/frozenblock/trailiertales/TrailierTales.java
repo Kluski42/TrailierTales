@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.frozenblock.lib.advancement.api.AdvancementAPI;
 import net.frozenblock.lib.advancement.api.AdvancementEvents;
 import net.frozenblock.lib.entrypoint.api.FrozenModInitializer;
+import net.frozenblock.trailiertales.datafix.trailiertales.TrailierDataFixer;
 import net.frozenblock.trailiertales.mod_compat.TrailierModIntegrations;
 import net.frozenblock.trailiertales.registry.RegisterBlockEntities;
 import net.frozenblock.trailiertales.registry.RegisterBlocks;
@@ -22,6 +23,7 @@ import net.frozenblock.trailiertales.registry.RegisterParticles;
 import net.frozenblock.trailiertales.registry.RegisterRecipies;
 import net.frozenblock.trailiertales.registry.RegisterSensorTypes;
 import net.frozenblock.trailiertales.registry.RegisterSounds;
+import net.frozenblock.trailiertales.registry.RegsiterRuleBlockEntityModifiers;
 import net.frozenblock.trailiertales.worldgen.TrailierBiomeModifications;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -42,6 +44,7 @@ public class TrailierTales extends FrozenModInitializer {
 	public void onInitialize(String modId, ModContainer container) {
 		TrailierConstants.startMeasuring(this);
 
+		TrailierDataFixer.applyDataFixes(container);
 		RegisterBlocks.init();
 		RegisterBlockEntities.register();
 		RegisterItems.init();
@@ -57,6 +60,7 @@ public class TrailierTales extends FrozenModInitializer {
 		RegisterEnchantments.init();
 		RegisterMobEffects.init();
 		RegisterJukeboxSongs.init();
+		RegsiterRuleBlockEntityModifiers.init();
 
 		AdvancementEvents.INIT.register((holder, registries) -> {
 			Advancement advancement = holder.value();
