@@ -63,7 +63,11 @@ public final class TTItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
 		this.getOrCreateTagBuilder(ItemTags.DECORATED_POT_SHERDS)
 			.add(RegisterItems.BULLSEYE_POTTERY_SHERD)
-			.add(RegisterItems.WITHER_POTTERY_SHERD);
+			.add(RegisterItems.WITHER_POTTERY_SHERD)
+			.add(RegisterItems.BLOOM_POTTERY_SHERD)
+			.add(RegisterItems.INCIDENCE_POTTERY_SHERD)
+			.add(RegisterItems.CULTIVATOR_POTTERY_SHERD)
+			.add(RegisterItems.SPADE_POTTERY_SHERD);
 
 		this.getOrCreateTagBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS)
 			.add(RegisterItems.CYAN_ROSE_SEEDS);
