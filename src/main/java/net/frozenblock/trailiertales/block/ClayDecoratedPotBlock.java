@@ -74,7 +74,7 @@ public class ClayDecoratedPotBlock extends DecoratedPotBlock {
 				entity.awardStat(Stats.ITEM_USED.get(stack.getItem()));
 				Direction direction = hitResult.getDirection();
 				if (direction.get2DDataValue() != -1) {
-					clayPotBlockEntity.addDecoration(stack.getItem(), direction);
+					clayPotBlockEntity.addDecoration(stack.getItem(), state, direction);
 					clayPotBlockEntity.setChanged();
 					return ItemInteractionResult.SUCCESS;
 				}

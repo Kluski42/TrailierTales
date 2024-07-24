@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 public class ClayDecoratedPotBlockEntity extends BlockEntity {
 	public static final String TAG_SHERDS = "sherds";
 	private PotDecorations decorations;
+	private final int FRONT = 0, LEFT = 1, BACK = 2, RIGHT = 3;
 
 	public ClayDecoratedPotBlockEntity(BlockPos pos, BlockState state) {
 		super(RegisterBlockEntities.CLAY_DECORATED_POT, pos, state);
@@ -53,17 +54,18 @@ public class ClayDecoratedPotBlockEntity extends BlockEntity {
 		return this.decorations;
 	}
 
-	public void addDecoration(Item newSherd, Direction direction) {
+	public void addDecoration(Item newSherd, BlockState state, Direction direction) {
 		List<Item> sherds = getDecorations().ordered();
 		Optional<Item>[] items = new Optional[4];
-		int index = switch (direction) {
-			case NORTH -> 0;
-			case SOUTH -> 3;
-			case WEST -> 1;
-			case EAST -> 2;
+		int index = 4 + direction.getOpposite().get2DDataValue() - state.getValue(BlockStateProperties.HORIZONTAL_FACING).get2DDataValue();
+		index %= 4;
+		index = switch (index) {
+			case FRONT -> 3;
+			case LEFT -> 1;
+			case BACK -> 0;
+			case RIGHT -> 2;
 			default -> -1;
 		};
-
 		for (int i = 0; i < sherds.size(); i++) {
 			if (i == index) {
 				items[i] = Optional.ofNullable(newSherd);
@@ -75,6 +77,7 @@ public class ClayDecoratedPotBlockEntity extends BlockEntity {
 			}
 			items[i] = Optional.ofNullable(sherds.get(i));
 		}
+//										 back      left      right     front
 		decorations = new PotDecorations(items[0], items[1], items[2], items[3]);
 	}
 
