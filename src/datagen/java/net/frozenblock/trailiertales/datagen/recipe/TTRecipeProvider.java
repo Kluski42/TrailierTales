@@ -80,6 +80,14 @@ public class TTRecipeProvider extends FabricRecipeProvider {
 			.unlockedBy(getHasName(Items.CLAY), has(Items.CLAY))
 			.save(recipeOutput);
 
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.CLAY_DECORATED_POT, 4)
+			.define('#', Items.CLAY_BALL)
+			.pattern(" # ")
+			.pattern("# #")
+			.pattern(" # ")
+			.unlockedBy(getHasName(Items.CLAY_BALL), has(Items.CLAY_BALL))
+			.save(recipeOutput);
+
 		oneToOneConversionRecipe(recipeOutput, Items.CYAN_DYE, RegisterBlocks.CYAN_ROSE, "cyan_dye");
 
 		// GRANITE
@@ -412,7 +420,7 @@ public class TTRecipeProvider extends FabricRecipeProvider {
 
 		// DESOLATION SMITHING TEMPLATE
 
-			ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.DESOLATION_ARMOR_TRIM_SMITHING_TEMPLATE, 2)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.DESOLATION_ARMOR_TRIM_SMITHING_TEMPLATE, 2)
 			.define('#', Items.DIAMOND)
 			.define('C', Blocks.STONE_BRICKS)
 			.define('S', RegisterItems.DESOLATION_ARMOR_TRIM_SMITHING_TEMPLATE)
@@ -424,7 +432,7 @@ public class TTRecipeProvider extends FabricRecipeProvider {
 
 		// UNDEAD SMITHING TEMPLATE
 
-			ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.UNDEAD_ARMOR_TRIM_SMITHING_TEMPLATE, 2)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterItems.UNDEAD_ARMOR_TRIM_SMITHING_TEMPLATE, 2)
 			.define('#', Items.DIAMOND)
 			.define('C', RegisterBlocks.MOSSY_DEEPSLATE_BRICKS)
 			.define('S', RegisterItems.UNDEAD_ARMOR_TRIM_SMITHING_TEMPLATE)

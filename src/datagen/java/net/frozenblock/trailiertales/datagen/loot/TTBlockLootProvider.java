@@ -95,6 +95,7 @@ public final class TTBlockLootProvider extends FabricBlockLootTableProvider {
 
 		this.add(RegisterBlocks.COFFIN, noDrop());
 		this.dropSelf(RegisterBlocks.SURVEYOR);
+		this.dropSelf(RegisterBlocks.CLAY_DECORATED_POT);
 	}
 
 }
