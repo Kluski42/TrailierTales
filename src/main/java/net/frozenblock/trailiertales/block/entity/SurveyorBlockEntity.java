@@ -59,19 +59,18 @@ public class SurveyorBlockEntity extends BlockEntity {
 	@Override
 	protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
 		super.loadAdditional(nbt, lookupProvider);
-		//this.lastDetectionPower = nbt.getInt("last_detection_power");
-		//this.detectionCooldown = nbt.getInt("detection_cooldown");
+		this.lastDetectionPower = nbt.getInt("last_detection_power");
+		this.detectionCooldown = nbt.getInt("detection_cooldown");
 	}
 
 	@Override
 	protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
 		super.saveAdditional(nbt, lookupProvider);
-		//nbt.putInt("last_detection_power", this.lastDetectionPower);
-		//nbt.putInt("detection_cooldown", this.detectionCooldown);
+		nbt.putInt("last_detection_power", this.lastDetectionPower);
+		nbt.putInt("detection_cooldown", this.detectionCooldown);
 	}
 
 	public void tickServer(ServerLevel serverLevel, BlockPos pos, BlockState state) {
-		/*
 		if (this.detectionCooldown <= 0) {
 			this.detectionCooldown = 2;
 
@@ -139,12 +138,13 @@ public class SurveyorBlockEntity extends BlockEntity {
 					}
 				}
 			}
+			int previousDetection = this.lastDetectionPower;
 			this.lastDetectionPower = Math.clamp(15 - closestDetection, 0, 15);
-			SurveyorBlock.updatePower(serverLevel, pos, state, this.lastDetectionPower);
+			boolean updateNeighbors = previousDetection != this.lastDetectionPower;
+			SurveyorBlock.updatePower(serverLevel, pos, state, this.lastDetectionPower, updateNeighbors);
 		} else {
 			this.detectionCooldown -= 1;
 		}
-		 */
 	}
 
 	private Vec3 closestPointTo(@NotNull AABB aabb, @NotNull Vec3 point) {
