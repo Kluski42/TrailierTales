@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -116,9 +117,9 @@ public class ClayDecoratedPotBlock extends DecoratedPotBlock {
 		ItemStack potItemStack = clayPotBlockEntity.getBakedPotItem();
 		world.setBlock(pos, getBakedEquivalent(state), 11);
 		if (world.getBlockEntity(pos) instanceof DecoratedPotBlockEntity decoratedPotBlockEntity) {
-			// Sculk block change signal
 			decoratedPotBlockEntity.setFromItem(potItemStack);
 			decoratedPotBlockEntity.setChanged();
+			world.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
 		}
 	}
 

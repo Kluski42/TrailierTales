@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 
 public class RegisterDispenserBehavior {
 	// Every sherd in the game
-	public static Item[] sherds = {Items.ANGLER_POTTERY_SHERD, Items.ARCHER_POTTERY_SHERD, Items.ARMS_UP_POTTERY_SHERD, Items.BLADE_POTTERY_SHERD, Items.BREWER_POTTERY_SHERD, Items.BURN_POTTERY_SHERD, Items.DANGER_POTTERY_SHERD, Items.EXPLORER_POTTERY_SHERD, Items.FLOW_POTTERY_SHERD, Items.FRIEND_POTTERY_SHERD, Items.GUSTER_POTTERY_SHERD, Items.HEART_POTTERY_SHERD, Items.HEARTBREAK_POTTERY_SHERD, Items.HOWL_POTTERY_SHERD, Items.MINER_POTTERY_SHERD, Items.MOURNER_POTTERY_SHERD, Items.PLENTY_POTTERY_SHERD, Items.PRIZE_POTTERY_SHERD, Items.SCRAPE_POTTERY_SHERD, Items.SHEAF_POTTERY_SHERD, Items.SHELTER_POTTERY_SHERD, Items.SKULL_POTTERY_SHERD, Items.SNORT_POTTERY_SHERD, RegisterItems.BULLSEYE_POTTERY_SHERD, RegisterItems.WITHER_POTTERY_SHERD, RegisterItems.BLOOM_POTTERY_SHERD, RegisterItems.INCIDENCE_POTTERY_SHERD, RegisterItems.CULTIVATOR_POTTERY_SHERD, RegisterItems.SPADE_POTTERY_SHERD};
+	public static final Item[] SHERDS = {Items.ANGLER_POTTERY_SHERD, Items.ARCHER_POTTERY_SHERD, Items.ARMS_UP_POTTERY_SHERD, Items.BLADE_POTTERY_SHERD, Items.BREWER_POTTERY_SHERD, Items.BURN_POTTERY_SHERD, Items.DANGER_POTTERY_SHERD, Items.EXPLORER_POTTERY_SHERD, Items.FLOW_POTTERY_SHERD, Items.FRIEND_POTTERY_SHERD, Items.GUSTER_POTTERY_SHERD, Items.HEART_POTTERY_SHERD, Items.HEARTBREAK_POTTERY_SHERD, Items.HOWL_POTTERY_SHERD, Items.MINER_POTTERY_SHERD, Items.MOURNER_POTTERY_SHERD, Items.PLENTY_POTTERY_SHERD, Items.PRIZE_POTTERY_SHERD, Items.SCRAPE_POTTERY_SHERD, Items.SHEAF_POTTERY_SHERD, Items.SHELTER_POTTERY_SHERD, Items.SKULL_POTTERY_SHERD, Items.SNORT_POTTERY_SHERD, RegisterItems.BULLSEYE_POTTERY_SHERD, RegisterItems.WITHER_POTTERY_SHERD, RegisterItems.BLOOM_POTTERY_SHERD, RegisterItems.INCIDENCE_POTTERY_SHERD, RegisterItems.CULTIVATOR_POTTERY_SHERD, RegisterItems.SPADE_POTTERY_SHERD};
 
 	public static void bootstrap() {
 		OptionalDispenseItemBehavior sherdDispenserBehavior = new OptionalDispenseItemBehavior() {
@@ -34,9 +34,8 @@ public class RegisterDispenserBehavior {
 						blockEntity.addDecoration(stack.getItem(), potState, imprintDirection);
 						blockEntity.setChanged();
 					}
-					return stack;
 				}
-				return super.execute(pointer, stack);
+				return stack;
 			}
 		};
 
@@ -62,7 +61,7 @@ public class RegisterDispenserBehavior {
 			}
 		};
 
-		for (Item sherd : sherds) {
+		for (Item sherd : SHERDS) {
 			DispenserBlock.registerBehavior(sherd, sherdDispenserBehavior);
 		}
 		DispenserBlock.registerBehavior(RegisterBlocks.CLAY_DECORATED_POT, clayPotDispenserBehavior);
