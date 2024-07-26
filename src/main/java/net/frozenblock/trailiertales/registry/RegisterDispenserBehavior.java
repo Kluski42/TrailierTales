@@ -1,16 +1,20 @@
 package net.frozenblock.trailiertales.registry;
 
+import com.mojang.logging.LogUtils;
 import net.frozenblock.trailiertales.block.entity.ClayDecoratedPotBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.slf4j.Logger;
 
 public class RegisterDispenserBehavior {
 	// Every sherd in the game
@@ -36,8 +40,31 @@ public class RegisterDispenserBehavior {
 			}
 		};
 
+		OptionalDispenseItemBehavior clayPotDispenserBehavior = new OptionalDispenseItemBehavior() {
+			private static final Logger LOGGER = LogUtils.getLogger();
+
+			@Override
+			protected ItemStack execute(BlockSource pointer, ItemStack stack) {
+				this.setSuccess(false);
+				Item item = stack.getItem();
+				if (item instanceof BlockItem) {
+					Direction dispenserDir = pointer.state().getValue(DispenserBlock.FACING);
+					BlockPos blockPos = pointer.pos().relative(dispenserDir);
+					Direction potDir = (dispenserDir.get2DDataValue() != -1) ? dispenserDir : Direction.NORTH;
+					try {
+						this.setSuccess(((BlockItem) item).place(new DirectionalPlaceContext(pointer.level(), blockPos, dispenserDir, stack, potDir)).consumesAction());
+					} catch (Exception exception) {
+						LOGGER.error("Error trying to place clay decorated pot at {}", blockPos, exception);
+					}
+				}
+
+				return stack;
+			}
+		};
+
 		for (Item sherd : sherds) {
 			DispenserBlock.registerBehavior(sherd, sherdDispenserBehavior);
 		}
+		DispenserBlock.registerBehavior(RegisterBlocks.CLAY_DECORATED_POT, clayPotDispenserBehavior);
 	}
 }
