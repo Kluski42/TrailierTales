@@ -89,7 +89,7 @@ public class ClayDecoratedPotRenderer implements BlockEntityRenderer<ClayDecorat
 
 	private static Material getSideMaterial(Optional<Item> optional) {
 		if (optional.isPresent()) {
-			Material material = Sheets.getDecoratedPotMaterial(DecoratedPotPatterns.getPatternFromItem((Item) optional.get()));
+			Material material = Sheets.getDecoratedPotMaterial(DecoratedPotPatterns.getPatternFromItem(optional.get()));
 			if (material != null) {
 				return material;
 			}

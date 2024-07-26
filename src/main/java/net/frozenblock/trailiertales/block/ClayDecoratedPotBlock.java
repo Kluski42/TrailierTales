@@ -56,6 +56,7 @@ public class ClayDecoratedPotBlock extends DecoratedPotBlock {
 		if (state.is(BlockTags.CAMPFIRES) && state.hasProperty(LIT)) {
 			return state.getValue(LIT);
 		}
+		if (state.is(Blocks.MAGMA_BLOCK)) return true;
 		if (state.is(Blocks.LAVA)) return true;
 		return false;
 	}

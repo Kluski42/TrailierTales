@@ -80,7 +80,7 @@ public class TTRecipeProvider extends FabricRecipeProvider {
 			.unlockedBy(getHasName(Items.CLAY), has(Items.CLAY))
 			.save(recipeOutput);
 
-		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.CLAY_DECORATED_POT, 4)
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, RegisterBlocks.CLAY_DECORATED_POT, 1)
 			.define('#', Items.CLAY_BALL)
 			.pattern(" # ")
 			.pattern("# #")
